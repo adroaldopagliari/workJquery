@@ -27,7 +27,7 @@ header img {
 	position: absolute;
 }
 .jssorb01 div, .jssorb01 div:hover, .jssorb01 .av {
-	position: absolute;            /* size of bullet elment */
+	position: absolute;            
 	width: 12px;
 	height: 12px;
 	filter: alpha(opacity=70);
@@ -48,24 +48,13 @@ header img {
 .jssorb01 .dn, .jssorb01 .dn:hover {
 	background-color: #555555;
 }
-
-/* jssor slider arrow navigator skin 05 css */
-
-/*
-.jssora05l                  (normal)
-.jssora05r                  (normal)
-.jssora05l:hover            (normal mouseover)
-.jssora05r:hover            (normal mouseover)
-.jssora05l.jssora05ldn      (mousedown)
-.jssora05r.jssora05rdn      (mousedown)
-*/
 .jssora05l, .jssora05r {
 	display: block;
-	position: absolute;            /* size of arrow element */
+	position: absolute;           
 	width: 40px;
 	height: 40px;
 	cursor: pointer;
-	background: url('img/a17.png') no-repeat;
+	background: url('../imgs/banner/a17.png') no-repeat;
 	overflow: hidden;
 }
 .jssora05l {
@@ -85,4 +74,63 @@ header img {
 }
 .jssora05r.jssora05rdn {
 	background-position: -310px -40px;
+}
+.form {
+	border: 1px solid #CCC;
+	border-radius: 5px;
+	margin: 10px;
+	padding: 10px;
+	width: 90%;
+}
+.form:focus {
+	background: #ADD8E6;
+}
+
+.btn {
+	padding: 10px;
+	background: #7B68EE;
+	color: #FFF;
+	text-decoration: none;
+	text-align: center;
+	transition: all 0.5s;
+}
+h3 {
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+}
+label {
+    display: inline-block;
+    width:100px;
+    text-align: right;
+}
+
+select {
+	background-color: white;
+}
+
+select option {
+	background-color: white;	
+}
+footer{
+	background: #303152;
+	float: left;
+	padding: 10px 0px;
+	text-align: center;
+	color: #FFF;
+	width: 100%;
+}
+footer p {
+	font: 14px "Open Sans", Verdana;
+	text-align: center;
+	text-indent: 2em;
+	line-height: 200%;
+}
+footer a {
+	font: 14px "Open Sans", Verdana;
+	text-align: center;
+	text-indent: 2em;
+	line-height: 200%;
+	text-decoration: none;
+	color: #606062;
 }

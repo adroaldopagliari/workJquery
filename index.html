@@ -4,14 +4,22 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="imgs/favicon.png">
 		<title>JQuery - Adroaldo Pagliari</title>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/menu.css">
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
 		<script type="text/javascript" src="jquery-2.2.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/jquery.goup.min.js"></script>
 		<script type="text/javascript" src="js/menu.js"></script>
 		<script type="text/javascript" src="js/jssor.slider.mini.js"></script>
+		<script type="text/javascript" src="js/jquery.inputmask-3.x/js/inputmask.js"></script>
+		<script type="text/javascript" src="js/jquery.inputmask-3.x/js/inputmask.numeric.extensions.js"></script>
+		<script type="text/javascript" src="js/jquery.inputmask-3.x/js/jquery.inputmask.js"></script>
+		<script type="text/javascript" src="js/snapGallery.js"></script>
 		<script>
-		jQuery(document).ready(function ($) {
+		$(document).ready(function() {
 		
 		var jssor_1_SlideshowTransitions = [
 		{$Duration:1200,x:0.2,y:-0.1,$Delay:20,$Cols:8,$Rows:4,$Clip:15,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$Formation:$JssorSlideshowFormations$.$FormationStraightStairs,$Assembly:260,$Easing:{$Left:$Jease$.$InWave,$Top:$Jease$.$InWave,$Clip:$Jease$.$OutQuad},$Outside:true,$Round:{$Left:1.3,$Top:2.5}},
@@ -60,6 +68,62 @@
 		$(window).bind("resize", ScaleSlider);
 		$(window).bind("orientationchange", ScaleSlider);
 		//responsive code end
+		//máscaras dos campos
+		$("#data").datepicker({
+				dateFormat: 'dd/mm/yy',
+				dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+				dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+				dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+				monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+				monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+				nextText: 'Próximo',
+				prevText: 'Anterior'
+				});
+		$("#fone").inputmask("(99) [9]9999-9999");
+		$.getJSON('estados-cidades.json', function( data ) {
+			var itens = '<option name="">- Selecione um estado -</option>';
+			$.each(data.estados, function (key, val) {
+			itens = itens + '<option value="' + val.sigla + '">' + val.nome + '</option>';
+			});
+			$('#estado').html(itens);
+			$('#estado').change(function () {
+				var estado = $(this).val();
+				var cidadesSel = '<option name="">- Selecione uma cidade -</option>';
+				$.each(data.estados, function (key, val) {
+					if(val.sigla === estado) {
+						$.each(val.cidades, function (key, val) {
+							cidadesSel = cidadesSel + '<option value="' + val + '">' + val + '</option>';
+						});
+					}
+				
+				});
+				$('#cidade').html(cidadesSel);
+			}).change();
+			});
+		$("#form1").submit(function(e){
+				e.preventDefault();
+				var emailPattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+				var email = $("#email").val();
+				if(!emailPattern.test(email)) {
+					$('#email').val("");
+					$('#email').attr('placeholder','Por favor informe um email válido.');
+					$("#email").focus();
+				}
+			});
+		$('#gallery-container').snapGallery({
+					minWidth: 100,
+					maxCols: 2,
+					margin: 2
+				});
+				// instancia o plugin
+				$.goup();
+				// customização do layout do botão
+				$.goup({
+					containerSize: 35, // tamanho do botão
+					bcolor: "#696969", // cinza
+					trigger: 150 // a partir de quantos pixels ele aparece
+							});
+		
 		});
 		</script>
 	</head>
@@ -72,17 +136,16 @@
 				<li><a href='#'><span>Página Inicial</span></a></li>
 				<li class='active has-sub'><a href='#'><span>Produtos</span></a>
 				<ul>
-					<li><a href='#'><span>Pericíveis</span></a>
-					<li><a href='#'><span>Não-Pericíveis</span></a>
-				</li>
+					<li><a href='#'><span>Pericíveis</span></a></li>
+					<li><a href='#'><span>Não-Pericíveis</span></a></li>
+				</ul>
 			</li>
+			<li><a href='#'><span>Cadastro</span></a></li>
+			<li><a href='#'><span>Quem Somos</span></a></li>
+			<li class='last'><a href='#'><span>Contato</span></a></li>
 		</ul>
-		<li><a href='#'><span>Cadastro</span></a>
-		<li><a href='#'><span>Quem Somos</span></a>
-		<li class='last'><a href='#'><span>Contato</span></a></li>
 	</div>
 	<div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 600px; height: 300px; overflow: hidden; visibility: hidden;">
-		<!-- Loading Screen -->
 		<div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
 			<div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
 			<div style="position:absolute;display:block;background:url('imgs/banner/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
@@ -103,24 +166,53 @@
 			<a data-u="ad" href="http://www.jssor.com" style="display:none">Banners - JQuery</a>
 			
 		</div>
-		<!-- Bullet Navigator -->
 		<div data-u="navigator" class="jssorb01" style="bottom:16px;right:16px;">
 			<div data-u="prototype" style="width:12px;height:12px;"></div>
 		</div>
-		<!-- Arrow Navigator -->
 		<span data-u="arrowleft" class="jssora05l" style="top:0px;left:8px;width:40px;height:40px;" data-autocenter="2"></span>
 		<span data-u="arrowright" class="jssora05r" style="top:0px;right:8px;width:40px;height:40px;" data-autocenter="2"></span>
 	</div>
 	<h3>formulário - JQuery</h3>
-	<form id="form1" method="post" action="">
-		<label for="nome">Nome:</label>
-		<input id="nome" name="nome" type="text" /><br />
-		<label for="idade">Idade:</label>
-		<input id="idade" name="idade" type="number" /><br />
-		<label for="email">e-mail:</label>
-		<input id="email" name="email" type="text" /><br />
-		<button id="bt-limpar">Limpar</button>
-		<button id="bt-enviar">Enviar</button>
-	</form>
+	<br>
+	<br>
+	<form name="form1" id="form1" action="#" method="post">
+		<label for="name">Nome:</label><br>
+		<input type="text" id="name" name="name" class="form" placeholder="Digite seu nome" required><br>
+		<label for="email">Email:</label><br>
+		<input type="text" id="email" name="email" class="form" placeholder="Digite seu email" required><br>
+		<label for="telefone">Telefone:</label><br>
+		<input type="tel" id="fone" name="telefone" class="form" placeholder="Digite seu telefone" ><br>
+		<label id="nascimento" for="nascimento">Data Nascimento:</label><br>
+		<input type="text" id="data" class="form" placeholder="Digite sua data de nascimento">
+		<br>
+		<label for="estado">Estado</label><br>
+	<select id="estado" class="form"></select><br>
+	<label for="cidade">Cidade</label><br>
+<select id="cidade" class="form"></select><br>
+<button type="submit" class="btn">
+<i class="fa fa-check fa-2x"></i>Enviar Mensagem
+</button>
+</form>
+<br>
+<div id="galeria" class="box">
+<div class="container">
+	<h3>Galeria</h3>
+	<br>
+	<ul id="gallery-container">
+		<li><img src="imgs/banner/01.jpg" title="Primeira Imagem"></li>
+		<li><img src="imgs/banner/02.jpg" title="Segunda Imagem"></li>
+		<li><img src="imgs/banner/03.jpg" title="Terceira Imagem"></li>
+		<li><img src="imgs/banner/04.jpg" title="Quarta Imagem"></li>
+	</ul>
+</div>
+</div>
+<footer>
+<p>Site do Adroaldo - Todos os direitos reservados</p>
+<p>Desenvolvido por Adroaldo Pagliari</p>
+<a href="https://www.facebook.com/Adroald0"></a>
+<a href="https://twitter.com/adroald0"></a>
+<a href="https://github.com/adroaldopagliari"></a>
+<a href="https://br.linkedin.com/in/adroaldo-pagliari-5856363b"></a>
+</footer>
 </body>
 </html>
